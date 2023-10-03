@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Rigidbody physics;
     private Vector3 _moveDirection;
     private Vector3 _jumpDirection = Vector3.up;
+    bool touchingGround = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,9 +28,25 @@ public class Player : MonoBehaviour
         _moveDirection = currentDirection;
     }
 
+    private void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.tag == "Ground")
+        {
+            touchingGround = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            touchingGround = false;
+        }
+    }
+
     public void JumpCheck(float currentJump)
     {
-        if(currentJump > 0)
+        if(currentJump > 0 && touchingGround == true)
         {
             physics.AddForce(_jumpDirection * 10, ForceMode.Impulse);
         }
