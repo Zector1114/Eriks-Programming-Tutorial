@@ -10,7 +10,7 @@ public class Collectables : MonoBehaviour
         {
             Destroy(gameObject);
 
-            Score.ScoreUpdater();
+            Score.Instance.ScoreUpdater();
         }
     }
 }

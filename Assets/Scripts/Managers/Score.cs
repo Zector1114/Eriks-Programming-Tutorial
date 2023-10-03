@@ -3,18 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Score : MonoBehaviour
+public sealed class Score : MonoBehaviour
 {
-    public static TextMeshProUGUI scoreText;
+    [SerializeField]
+    public TextMeshProUGUI scoreText;
 
-    static int scoreUp = 0;
+    int scoreUp = 0;
 
-    public static void ScoreUpdater()
+    public void ScoreUpdater()
     {
         scoreUp++;
 
-        Debug.Log(scoreUp.ToString());
-
         scoreText.text = "Score: " + scoreUp.ToString();
+    }
+
+    private static Score instance = null;
+
+    private void Start()
+    {
+        instance = this;
+    }
+
+    public static Score Instance
+    {
+        get
+        {
+            return instance;
+        }
     }
 }
